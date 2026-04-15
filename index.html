@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Kesayanganku ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #ffe6ea; /* Pink pastel lembut */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Animasi Shaky --- */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-15px) rotate(-5deg); }
+            40% { transform: translateX(15px) rotate(5deg); }
+            60% { transform: translateX(-15px) rotate(-5deg); }
+            80% { transform: translateX(15px) rotate(5deg); }
+            100% { transform: translateX(0); }
+        }
+
+        .shaky {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* --- Tipografi & Tombol --- */
+        h1 { margin-bottom: 20px; color: #ff4d6d; transition: all 0.3s ease; }
+        p { margin-bottom: 20px; font-size: 16px; color: #666; }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-yes { background-color: #ff4d6d; color: white; }
+        .btn-yes:hover { background-color: #e63956; transform: scale(1.05); }
+        
+        .btn-no { background-color: #ccc; color: white; }
+        
+        .warning-text {
+            color: #ff0000;
+            margin-top: 15px;
+            font-weight: 600;
+            min-height: 24px;
+        }
+
+        /* --- Step 2 & 3: Momen --- */
+        .hidden { display: none !important; }
+
+        .moment-btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            background-color: #fff;
+            border: 2px solid #ff4d6d;
+            color: #ff4d6d;
+        }
+        .moment-btn:hover {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-back {
+            margin-top: 25px;
+            background-color: #333;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="container">
+        <h1 id="question-text">Kamu sayang aku nggak? 🥺</h1>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="klikYa()">Ya!</button>
+            <button class="btn-no" onclick="klikTidak()">Egk</button>
+        </div>
+        <p id="warning-msg" class="warning-text"></p>
+    </div>
+
+    <div id="step2" class="container hidden">
+        <h1>Makasih yaa udah sayang aku! 🥰</h1>
+        <p>Sekarang, coba pilih salah satu momen favorit kita di bawah ini:</p>
+        <button class="moment-btn" onclick="tampilkanMomen('jalan')">Rumah Jikri 🚗</button>
+        <button class="moment-btn" onclick="tampilkanMomen('makan')">Bogor 🍜</button>
+        <button class="moment-btn" onclick="tampilkanMomen('lucu')">Kemanggisan 🤪</button>
+        <button class="moment-btn" onclick="tampilkanMomen('ultah')">Angkringan 🎂</button>
+        <button class="moment-btn" onclick="tampilkanMomen('spesial')">Randommm ✨</button>
+    </div>
+
+    <div id="step3" class="container hidden">
+        <h1 id="judul-galeri">Momen Kita</h1>
+        <div id="tempat-foto" class="gallery">
+            </div>
+        <button class="btn-back" onclick="kembaliKeMenu()">Kembali Pilih Momen</button>
+    </div>
+
+    <script>
+        // Variabel untuk Step 1
+        let jumlahKlikYa = 0;
+        const teksPertanyaan = document.getElementById("question-text");
+        const pesanWarning = document.getElementById("warning-msg");
+        const wadahStep1 = document.getElementById("step1");
+
+        // Fungsi Tombol YA
+        function klikYa() {
+            jumlahKlikYa++;
+            pesanWarning.innerText = ""; // Hapus pesan error kalau ada
+            
+            if (jumlahKlikYa === 1) {
+                teksPertanyaan.innerText = "yang bener?? 🤔";
+                teksPertanyaan.style.fontSize = "2.2rem";
+            } else if (jumlahKlikYa === 2) {
+                teksPertanyaan.innerText = "serius beb??? 🥹";
+                teksPertanyaan.style.fontSize = "2.6rem";
+            } else if (jumlahKlikYa === 3) {
+                // Lanjut ke Step 2
+                document.getElementById("step1").classList.add("hidden");
+                document.getElementById("step2").classList.remove("hidden");
+            }
+        }
+
+        // Fungsi Tombol TIDAK
+        function klikTidak() {
+            // Berikan efek shaky ke container
+            wadahStep1.classList.add("shaky");
+            
+            // Hapus class shaky setelah animasi selesai supaya bisa diulang
+            setTimeout(() => {
+                wadahStep1.classList.remove("shaky");
+            }, 500);
+
+            // Munculkan teks alasan lucu
+            const alasanLucu = [
+                "Dilarang pencet! 😤",
+                "Tombol ini lagi rusak, pencet yang Ya aja ya! 😜",
+                "Gabisa Jir jangan dipencet lagi 😌",
+                "yang benerr lah sayang! 💖"
+            ];
+            
+            // Ambil alasan random
+            let randomText = alasanLucu[Math.floor(Math.random() * alasanLucu.length)];
+            pesanWarning.innerText = randomText;
+        }
+
+        // Data Foto untuk Step 3 (Silakan ganti URL gambarnya dengan foto aslimu)
+        const dataFoto = {
+            'jalan': [
+                "1.jpg", "2.jpg", "3.jpg"
+            ],
+            'makan': [
+                "4.jpg", "5.jpg", "6.jpg", "42.jpg"
+            ],
+            'lucu': [
+                "7.jpg", "8.jpg", "9.jpg"
+            ],
+            'ultah': [
+                "10.jpg", "11.jpg", "12.jpg", "101.jpg"
+            ],
+            'spesial': [
+                "14.jpg", "13.jpg", "15.jpg", "142.jpg", "143.png"
+            ]
+        };
+
+        const judulMomen = {
+            'jalan': "Rumah Jikri 🚗",
+            'makan': "Bogor 🍜",
+            'lucu': "Kemanggisan 🤪",
+            'ultah': "Angkringan 🎂",
+            'spesial': "Randommm ✨"
+        };
+
+        // Fungsi Menampilkan Momen (Step 3)
+        function tampilkanMomen(kategori) {
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("step3").classList.remove("hidden");
+
+            document.getElementById("judul-galeri").innerText = judulMomen[kategori];
+
+            let galeriHTML = "";
+            // Looping foto berdasarkan kategori yang dipilih
+            dataFoto[kategori].forEach(namaFile => {
+                // Catatan: Pastikan foto ada di folder yang sama, 
+                // atau ganti path src-nya sesuai folder tempatmu nyimpen foto
+                galeriHTML += `<img src="${namaFile}" alt="Foto Momen">`;
+            });
+
+            document.getElementById("tempat-foto").innerHTML = galeriHTML;
+        }
+
+        // Fungsi Kembali ke Step 2
+        function kembaliKeMenu() {
+            document.getElementById("step3").classList.add("hidden");
+            document.getElementById("step2").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
